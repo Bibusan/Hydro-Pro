@@ -2,714 +2,971 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>HydroPro | Water Tracker & Hydration Reminder | Daily Goal & Timer</title>
-    <meta name="description" content="HydroPro is a smart hydration tracker that schedules drink reminders based on your daily water goal and active hours. Stay healthy with evenly spaced water reminders and progress tracking.">
-    <meta name="keywords" content="Water tracker, Hydration app, Drink water reminder, Daily water intake, Hydration tracker, Break reminder">
-    <meta name="theme-color" content="#0f172a">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "HydroPro",
-      "description": "HydroPro schedules your water intake with smart reminders, progress and streak tracking.",
-      "applicationCategory": "HealthApplication",
-      "operatingSystem": "Web",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
-    }
-    </script>
-
+    <title>Master Studio v10.0 - Production Suite</title>
     <style>
-        /* 5. Visual Style Requirements */
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --neon-blue: #0ea5e9;
-            --neon-cyan: #06b6d4;
-            --neon-glow: 0 0 10px rgba(6, 182, 212, 0.5), 0 0 20px rgba(6, 182, 212, 0.3);
-            --danger: #ef4444;
-            --success: #22c55e;
-            --font-head: 'Orbitron', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-            --font-body: 'Inter', sans-serif;
+        :root { 
+            --bg-dark: #09090b; 
+            --panel: #18181b; 
+            --border: #27272a; 
+            --accent: #10b981; 
+            --accent-hover: #059669;
+            --text-main: #e4e4e7;
+            --text-muted: #a1a1aa;
+            --input-bg: #000;
         }
 
-        * { box-sizing: border-box; }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-body);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* 4.1 Layout Design */
-        .app-container {
-            width: 100%;
-            max-width: 450px;
-            padding: 20px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--neon-cyan);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: var(--neon-glow);
-            position: relative;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        /* Typography */
-        h1 {
-            font-family: var(--font-head);
-            text-align: center;
-            color: var(--neon-cyan);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 0;
-            text-shadow: 0 0 10px var(--neon-blue);
-        }
-
-        h2 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-muted); }
+        body { margin: 0; background: var(--bg-dark); color: var(--text-main); font-family: 'Segoe UI', Inter, sans-serif; display: flex; overflow: hidden; height: 100vh; }
         
-        .info-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: transparent;
-            border: 1px solid var(--text-muted);
-            color: var(--text-muted);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-family: var(--font-mono);
-        }
+        /* ICONS & SCROLL */
+        .icon { display: inline-block; width: 14px; text-align: center; margin-right: 5px; opacity: 0.7; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 
-        /* Inputs */
-        .input-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 0.9rem; }
+        /* SIDEBAR */
+        #sidebar { width: 350px; background: var(--panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 10; height: 100%; box-shadow: 2px 0 10px rgba(0,0,0,0.3); }
         
-        input {
-            width: 100%;
-            padding: 12px;
-            background: #0f172a;
-            border: 1px solid #334155;
-            color: white;
-            border-radius: 8px;
-            font-family: var(--font-mono);
-            font-size: 1rem;
-            transition: border 0.3s;
-        }
+        .header { padding: 12px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: #111; }
+        .header h1 { font-size: 0.9rem; margin: 0; font-weight: 800; letter-spacing: 0.5px; color: var(--accent); }
         
-        input:focus {
-            outline: none;
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 5px var(--neon-cyan);
+        .scroll-area { flex-grow: 1; overflow-y: auto; padding: 15px; }
+
+        /* UI COMPONENTS */
+        .section-title { font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin: 15px 0 8px 0; letter-spacing: 1px; display: flex; justify-content: space-between; }
+        .section-title:first-child { margin-top: 0; }
+        
+        .control-group { background: #27272a50; padding: 10px; border-radius: 6px; margin-bottom: 10px; border: 1px solid #3f3f46; }
+        
+        label { display: block; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 4px; margin-top: 6px; }
+        
+        /* INPUTS */
+        input[type="range"], input[type="color"], input[type="text"], input[type="number"], select { 
+            width: 100%; box-sizing: border-box; margin-bottom: 4px; 
+            background: var(--input-bg); border: 1px solid var(--border); 
+            color: white; border-radius: 3px; padding: 4px; font-size: 0.75rem;
+        }
+        input[type="range"] { padding: 0; height: 4px; cursor: ew-resize; accent-color: var(--accent); margin-top: 5px; margin-bottom: 10px;}
+        input[type="checkbox"] { width: auto; margin-right: 5px; vertical-align: middle; }
+        
+        /* BUTTONS */
+        .btn-row { display: flex; gap: 5px; margin-bottom: 5px; flex-wrap: wrap; }
+        .btn { 
+            flex: 1; padding: 6px 10px; border: none; border-radius: 3px; 
+            font-weight: 600; cursor: pointer; font-size: 0.7rem; 
+            background: #3f3f46; color: white; transition: 0.2s; min-width: 60px;
+        }
+        .btn:hover { background: #52525b; }
+        .btn-primary { background: var(--accent); color: #000; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-anim { background: #e11d48; color: white; }
+        .btn-xs { padding: 2px 6px; font-size: 0.6rem; width: auto; flex: unset; }
+
+        /* SCENE TREE */
+        #sceneTree { height: 180px; overflow-y: auto; background: #000; border: 1px solid var(--border); border-radius: 4px; margin-top: 5px; }
+        .tree-item { padding: 4px 8px; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; border-bottom: 1px solid #111; user-select: none; }
+        .tree-item:hover { background: #1a1a1a; }
+        .tree-item.active { background: #1f2937; color: var(--accent); border-left: 2px solid var(--accent); }
+        .tree-item.picking { background: #3b82f6; color: white; animation: pulse 1s infinite; }
+        .tree-indent { display: inline-block; width: 10px; height: 100%; border-left: 1px solid #333; margin-right: 4px; opacity: 0.3; }
+
+        /* NUMERIC ROW */
+        .num-row { display: flex; gap: 5px; margin-bottom: 5px; }
+        .num-input-group { flex: 1; display: flex; align-items: center; background: #000; border: 1px solid var(--border); border-radius: 3px; padding-left: 5px; }
+        .num-input-group span { font-size: 0.6rem; color: var(--accent); font-weight: bold; width: 10px; }
+        .num-input-group input { border: none; background: transparent; margin: 0; padding: 4px; text-align: right; }
+
+        /* MAIN CANVAS AREA */
+        #viewport { flex-grow: 1; position: relative; background-color: #09090b; overflow: hidden; }
+        
+        /* OVERLAYS */
+        .overlay-top { position: absolute; top: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; z-index: 5; pointer-events: none; }
+        .toolbar { pointer-events: auto; background: rgba(0,0,0,0.8); padding: 5px; border-radius: 6px; display: flex; gap: 2px; border: 1px solid var(--border); backdrop-filter: blur(4px); }
+        .tool-btn { width: 32px; height: 32px; border: none; background: transparent; color: #ccc; cursor: pointer; border-radius: 4px; font-size: 1rem; }
+        .tool-btn:hover { background: #333; color: white; }
+        .tool-btn.active { background: var(--accent); color: #000; }
+
+        /* ANIMATION TIMELINE */
+        #timeline-panel {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 120px; background: var(--panel); border-top: 1px solid var(--border);
+            display: flex; flex-direction: column; padding: 10px 20px; z-index: 20;
+        }
+        .timeline-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .time-readout { font-family: monospace; color: var(--accent); font-size: 0.9rem; background: #000; padding: 2px 6px; border-radius: 4px; }
+        
+        /* Timeline Track */
+        .track-wrapper { position: relative; width: 100%; height: 40px; background: #111; border-radius: 4px; border: 1px solid #333; overflow: hidden; }
+        #timeSlider { 
+            position: absolute; top:0; left:0; width: 100%; height: 100%; 
+            opacity: 0; cursor: crosshair; z-index: 10; margin: 0;
+        }
+        .playhead { 
+            position: absolute; top: 0; bottom: 0; width: 2px; background: #e11d48; 
+            pointer-events: none; z-index: 5; transform: translateX(-50%); 
+        }
+        .key-marker {
+            position: absolute; width: 8px; height: 8px; background: #fff; border: 1px solid #000;
+            border-radius: 50%; top: 50%; transform: translate(-50%, -50%); 
+            z-index: 2; pointer-events: none; box-shadow: 0 0 2px rgba(0,0,0,0.5);
         }
 
-        .row { display: flex; gap: 10px; }
-        .row > div { flex: 1; }
-
-        /* 4.2 Buttons */
-        .btn {
-            width: 100%;
-            padding: 15px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 8px;
-            font-family: var(--font-head);
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: transform 0.1s, opacity 0.2s;
-        }
-
-        .btn:active { transform: scale(0.98); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
-            color: #000;
-            box-shadow: 0 0 15px var(--neon-blue);
-        }
-
-        .btn-secondary { background: #334155; color: white; }
-        .btn-danger { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger); margin-top: 20px;}
-
-        /* Timer Display */
-        .timer-display {
-            font-family: var(--font-mono);
-            font-size: 3.5rem;
-            text-align: center;
-            margin: 20px 0;
-            color: white;
-            text-shadow: 0 0 15px rgba(255,255,255,0.3);
+        /* TOAST & OVERLAYS */
+        #toast {
+            position: absolute; bottom: 140px; right: 20px;
+            background: var(--accent); color: black; padding: 8px 16px;
+            border-radius: 4px; font-size: 0.8rem; font-weight: bold;
+            opacity: 0; transition: opacity 0.3s; pointer-events: none;
         }
         
-        .timer-label {
-            text-align: center;
-            color: var(--neon-cyan);
-            font-family: var(--font-head);
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+        #recOverlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 100; display: none;
+            justify-content: center; align-items: center; color: white;
+            flex-direction: column;
         }
-
-        /* 4.4 Water Animation (Cylinder) */
-        .water-cylinder {
-            width: 120px;
-            height: 160px;
-            border: 3px solid rgba(255,255,255,0.2);
-            border-radius: 0 0 20px 20px; /* Glass shape */
-            border-top: none;
-            margin: 0 auto 20px auto;
-            position: relative;
-            overflow: hidden;
-            background: rgba(255,255,255,0.05);
-        }
-
-        .water-fill {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 0%; /* Animate this */
-            background: linear-gradient(to top, var(--neon-blue), var(--neon-cyan));
-            opacity: 0.8;
-            transition: height 1s linear; /* Smooth fill */
-            box-shadow: 0 0 20px var(--neon-cyan);
-        }
-
-        .water-top {
-            position: absolute;
-            width: 200%;
-            height: 20px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            top: -10px;
-            left: -50%;
-            animation: wave 3s infinite linear;
-        }
-
-        @keyframes wave {
-            0% { transform: translateX(0) rotate(0deg); }
-            50% { transform: translateX(-10px) rotate(2deg); }
-            100% { transform: translateX(0) rotate(0deg); }
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            background: #334155;
-            height: 8px;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 20px;
-        }
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: var(--success);
-            transition: width 0.5s ease;
-            box-shadow: 0 0 10px var(--success);
-        }
-        .progress-text {
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 5px;
-        }
-
-        /* Utility Classes */
-        .hidden { display: none !important; }
-        .blink { animation: blinker 1s linear infinite; color: var(--neon-cyan); }
-        @keyframes blinker { 50% { opacity: 0; } }
-
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
-            z-index: 100;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: var(--card-bg);
-            border: 1px solid var(--neon-cyan);
-            padding: 30px;
-            border-radius: 16px;
-            max-width: 90%;
-            width: 400px;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-        .modal-content h3 { color: var(--text-main); font-family: var(--font-head); margin-top: 0; }
-        .modal-content ul { padding-left: 20px; }
-        .modal-close { float: right; font-size: 1.5rem; cursor: pointer; color: white; }
-
-        /* Streak Badge */
-        .streak-badge {
-            background: rgba(255,255,255,0.1);
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            display: inline-block;
-            margin-bottom: 10px;
-            color: #fbbf24;
-            border: 1px solid #fbbf24;
-        }
-
-        /* Audio element hidden */
-        audio { display: none; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <div id="setup-screen" class="card">
-            <button class="info-btn" onclick="app.toggleModal(true)">?</button>
-            <h1>HydroPro</h1>
-            <div style="text-align: center;"><span class="streak-badge" id="setup-streak">🔥 Streak: 0</span></div>
-            <h2>Configure Your Day</h2>
-            
-            <div class="input-group">
-                <label>Daily Goal (Liters)</label>
-                <input type="number" id="inp-goal" value="2.5" step="0.1" min="0.1">
-            </div>
-            
-            <div class="input-group">
-                <label>Cup Size (ml)</label>
-                <input type="number" id="inp-cup" value="250" step="50" min="50">
-            </div>
+<div id="recOverlay">
+    <div style="font-size: 2rem; color: #ef4444; font-weight: bold; animation: pulse 1s infinite;">● RECORDING SCENE</div>
+    <div style="color: #aaa; margin-top: 10px;">Please wait while the animation renders frame by frame...</div>
+</div>
 
-            <div class="row">
-                <div class="input-group">
-                    <label>Start Work</label>
-                    <input type="time" id="inp-start" value="09:00">
-                </div>
-                <div class="input-group">
-                    <label>End Work</label>
-                    <input type="time" id="inp-end" value="18:00">
-                </div>
-            </div>
-
-            <button class="btn btn-primary" onclick="app.startTracking()">Start Tracking</button>
-        </div>
-
-        <div id="tracking-screen" class="card hidden">
-            <button class="info-btn" onclick="app.toggleModal(true)">?</button>
-            <h1>HydroPro</h1>
-            <div style="text-align: center;"><span class="streak-badge" id="track-streak">🔥 Streak: 0</span></div>
-
-            <div class="timer-label" id="status-label">NEXT DRINK IN</div>
-            <div class="timer-display" id="timer">00:00</div>
-
-            <div class="water-cylinder">
-                <div class="water-fill" id="water-fill">
-                    <div class="water-top"></div>
-                </div>
-            </div>
-
-            <div class="row">
-                <button id="btn-drink" class="btn btn-primary" onclick="app.logDrink()" disabled>🥤 I Drank Water</button>
-            </div>
-            
-            <div class="row">
-                <button id="btn-pause" class="btn btn-secondary" onclick="app.togglePause()">Pause</button>
-                <button id="btn-delay" class="btn btn-secondary" onclick="app.delay()">Delay 5m</button>
-            </div>
-
-            <div class="progress-container">
-                <div class="progress-bar" id="daily-progress"></div>
-            </div>
-            <p class="progress-text" id="progress-text">0 / 0 Cups</p>
-
-            <button class="btn btn-danger" onclick="app.resetSettings()">Reset Settings</button>
-        </div>
-
-    </div>
-
-    <div id="info-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <span class="modal-close" onclick="app.toggleModal(false)">&times;</span>
-            <h3>How HydroPro Works</h3>
-            <ul>
-                <li><strong>Smart Intervals:</strong> We divide your work hours by your water goal to find the perfect drinking pace.</li>
-                <li><strong>Wait Timer:</strong> The timer stops at 00:00. It waits for YOU to confirm you drank.</li>
-                <li><strong>Visuals:</strong> The blue water fills up as your reminder approaches.</li>
-                <li><strong>Persistence:</strong> Reloading the page won't lose your data.</li>
-                <li><strong>Reset:</strong> Use "Reset Settings" to change your goal or hours mid-day.</li>
-            </ul>
+<div id="sidebar">
+    <div class="header">
+        <h1>MASTER STUDIO v10</h1>
+        <div class="btn-row" style="margin:0; width:auto;">
+            <button class="btn btn-xs" onclick="undo()" title="Undo (Ctrl+Z)">↶</button>
+            <button class="btn btn-xs" onclick="resetScene()">NEW</button>
         </div>
     </div>
 
-    <audio id="alarm-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
+    <div class="scroll-area">
+        <div class="section-title">Hierarchy <button class="btn btn-xs" onclick="refreshTree()">↻</button></div>
+        <div id="sceneTree"></div>
+        <div class="btn-row" style="margin-top: 5px;">
+             <button class="btn" id="btnParent" onclick="startParentingMode()" title="Select child, click this, then select parent">🔗 Pick Parent</button>
+             <button class="btn" onclick="unparentSelection()">💔 Unparent</button>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+        <div class="section-title">Assets</div>
+        <div class="btn-row">
+            <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">+ Model</button>
+            <button class="btn" onclick="addLight('point')">+ Point</button>
+            <button class="btn" onclick="addLight('dir')">+ Sun</button>
+        </div>
+        <input type="file" id="fileInput" hidden accept=".glb,.gltf,.obj,.jpg,.png">
 
-    <script>
-        /**
-         * HydroPro Core Logic
-         * Handles state management, timer logic, persistence, and DOM updates.
-         */
-        class HydroProApp {
-            constructor() {
-                // DOM Elements
-                this.dom = {
-                    setup: document.getElementById('setup-screen'),
-                    tracking: document.getElementById('tracking-screen'),
-                    inputs: {
-                        goal: document.getElementById('inp-goal'),
-                        cup: document.getElementById('inp-cup'),
-                        start: document.getElementById('inp-start'),
-                        end: document.getElementById('inp-end')
-                    },
-                    timer: document.getElementById('timer'),
-                    statusLabel: document.getElementById('status-label'),
-                    waterFill: document.getElementById('water-fill'),
-                    progressBar: document.getElementById('daily-progress'),
-                    progressText: document.getElementById('progress-text'),
-                    streaks: [document.getElementById('setup-streak'), document.getElementById('track-streak')],
-                    btnDrink: document.getElementById('btn-drink'),
-                    btnPause: document.getElementById('btn-pause'),
-                    btnDelay: document.getElementById('btn-delay'),
-                    modal: document.getElementById('info-modal'),
-                    audio: document.getElementById('alarm-sound')
-                };
+        <div id="propertiesPanel" style="display:none; margin-top: 20px;">
+            <div class="section-title">Transform</div>
+            <div class="control-group">
+                <div class="num-row" title="Position">
+                    <div class="num-input-group"><span>X</span><input type="number" id="posX" step="0.1" onchange="updateTransform('pos', 'x', this.value)"></div>
+                    <div class="num-input-group"><span>Y</span><input type="number" id="posY" step="0.1" onchange="updateTransform('pos', 'y', this.value)"></div>
+                    <div class="num-input-group"><span>Z</span><input type="number" id="posZ" step="0.1" onchange="updateTransform('pos', 'z', this.value)"></div>
+                </div>
+                <div class="num-row" title="Rotation">
+                    <div class="num-input-group"><span>R</span><input type="number" id="rotX" step="1" onchange="updateTransform('rot', 'x', this.value)"></div>
+                    <div class="num-input-group"><span>R</span><input type="number" id="rotY" step="1" onchange="updateTransform('rot', 'y', this.value)"></div>
+                    <div class="num-input-group"><span>R</span><input type="number" id="rotZ" step="1" onchange="updateTransform('rot', 'z', this.value)"></div>
+                </div>
+                <div class="num-row" title="Scale">
+                    <div class="num-input-group"><span>S</span><input type="number" id="sclX" step="0.1" onchange="updateTransform('scl', 'x', this.value)"></div>
+                    <div class="num-input-group"><span>S</span><input type="number" id="sclY" step="0.1" onchange="updateTransform('scl', 'y', this.value)"></div>
+                    <div class="num-input-group"><span>S</span><input type="number" id="sclZ" step="0.1" onchange="updateTransform('scl', 'z', this.value)"></div>
+                </div>
+                
+                <div class="btn-row" style="margin-top:10px;">
+                    <button class="btn" onclick="focusObject()">Focus (F)</button>
+                    <button class="btn" onclick="duplicateObject()">Clone (Ctrl+D)</button>
+                    <button class="btn btn-danger" onclick="deleteSelected()">Del</button>
+                </div>
+                <div class="btn-row" style="border-top:1px solid #333; padding-top:5px; margin-top:5px;">
+                     <label style="flex:1; cursor:pointer;"><input type="checkbox" id="castShadow" onchange="updateShadows()"> Cast Shd</label>
+                     <label style="flex:1; cursor:pointer;"><input type="checkbox" id="receiveShadow" onchange="updateShadows()"> Rec Shd</label>
+                </div>
+            </div>
 
-                // Default State
-                this.state = {
-                    running: false, // Is the timer actively ticking?
-                    activeMode: false, // Has the user started the day?
-                    goalL: 2.5,
-                    cupMl: 250,
-                    startStr: "09:00",
-                    endStr: "18:00",
+            <div id="matEditor" style="display:none;">
+                <div class="section-title">Material</div>
+                <div class="control-group">
+                    <label>Base Color / Albedo</label>
+                    <div class="btn-row">
+                        <input type="color" id="matColor" style="flex:1">
+                        <button class="btn btn-xs" onclick="triggerTex('map')">Tex</button>
+                    </div>
+
+                    <label>Emissive (Glow)</label>
+                    <div class="btn-row">
+                        <input type="color" id="matEmissive" style="flex:1">
+                        <button class="btn btn-xs" onclick="triggerTex('emissiveMap')">Tex</button>
+                    </div>
+
+                    <div style="display:flex; gap:10px;">
+                        <div style="flex:1"><label>Roughness</label><input type="range" id="matRough" min="0" max="1" step="0.01"></div>
+                        <div style="flex:1"><label>Metalness</label><input type="range" id="matMetal" min="0" max="1" step="0.01"></div>
+                    </div>
                     
-                    totalCups: 0,
-                    intervalSecs: 0,
+                    <label>Normal Map</label>
+                    <button class="btn" onclick="triggerTex('normalMap')">Load Normal Map</button>
                     
-                    currentCupsDrunk: 0,
-                    secondsLeft: 0,
-                    lastTick: Date.now(),
-                    streak: 0
-                };
-
-                this.timerId = null;
-                this.init();
-            }
-
-            // 6. Persistence & LocalStorage
-            init() {
-                this.loadState();
-                
-                // If we were in active mode, restore the UI immediately
-                if (this.state.activeMode) {
-                    this.dom.inputs.goal.value = this.state.goalL;
-                    this.dom.inputs.cup.value = this.state.cupMl;
-                    this.dom.inputs.start.value = this.state.startStr;
-                    this.dom.inputs.end.value = this.state.endStr;
+                    <label style="margin-top:5px;">Opacity & Transparency</label>
+                    <div class="btn-row" style="align-items: center;">
+                        <input type="range" id="matOpacity" min="0" max="1" step="0.01" style="flex:2">
+                        <label style="flex:1; margin:0; text-align:right;"><input type="checkbox" id="matTransparent"> Transp</label>
+                    </div>
                     
-                    this.switchScreen(true);
-                    this.updateUI();
-                    
-                    if (this.state.running) {
-                        this.startTimerLoop();
-                    } else {
-                         // If paused or waiting
-                         this.updateUI(); 
-                    }
-                }
-                
-                this.updateStreakUI();
+                    <input type="file" id="texInput" hidden accept="image/*">
+                </div>
+            </div>
 
-                // Save on unload
-                window.addEventListener('beforeunload', () => this.saveState());
-            }
+            <div id="lightEditor" style="display:none;">
+                <div class="section-title">Light Settings</div>
+                <div class="control-group">
+                    <label>Intensity</label>
+                    <input type="range" id="lightInt" min="0" max="10" step="0.1">
+                    <label>Color</label>
+                    <input type="color" id="lightCol">
+                </div>
+            </div>
+        </div>
 
-            calculatePlan() {
-                const goal = parseFloat(this.dom.inputs.goal.value);
-                const cup = parseInt(this.dom.inputs.cup.value);
-                const sVal = this.dom.inputs.start.value;
-                const eVal = this.dom.inputs.end.value;
+        <div class="section-title" style="margin-top: 20px;">Environment & Render</div>
+        <div class="control-group">
+            <label><strong>1. Solid Background</strong></label>
+            <input type="color" id="bgColor" value="#09090b">
+            
+            <hr style="border:0; border-top:1px solid #444; margin:10px 0;">
+            
+            <label><strong>2. World Environment (HDRI)</strong></label>
+            <div style="margin-bottom:8px;">
+                <label><input type="checkbox" id="envLighting" checked> Enable Lighting (Reflections)</label>
+                <label><input type="checkbox" id="envVisible" checked> Show Skybox (Overrides Solid BG)</label>
+            </div>
+            
+            <select id="envMapSelect">
+                <option value="venice_sunset_1k.hdr">Studio Warm</option>
+                <option value="royal_esplanade_1k.hdr">Bright Hall</option>
+                <option value="moonless_golf_1k.hdr">Dark Night</option>
+            </select>
+            <button class="btn" style="width:100%; margin-top:5px;" onclick="document.getElementById('hdrInput').click()">📂 Upload Custom HDR</button>
+            <input type="file" id="hdrInput" hidden accept=".hdr">
 
-                // Time logic
-                const [sH, sM] = sVal.split(':').map(Number);
-                const [eH, eM] = eVal.split(':').map(Number);
-                
-                let startMins = sH * 60 + sM;
-                let endMins = eH * 60 + eM;
+            <label style="margin-top:10px;">Post-Process Bloom</label>
+            <input type="range" id="bloomStr" min="0" max="3" step="0.1" value="0.5">
+            
+            <div class="section-title" style="margin-top:15px;">Export</div>
+            <div class="btn-row">
+                <button class="btn" onclick="exportRenderHighRes()">📸 HQ Image</button>
+                <button class="btn btn-primary" onclick="exportGLB()">💾 Save 3D</button>
+            </div>
+            <button class="btn btn-anim" style="width:100%; margin-top:5px;" onclick="exportVideo()">🎬 Export Video (MP4/WebM)</button>
+        </div>
+    </div>
+</div>
 
-                // Handle midnight crossing
-                if (endMins <= startMins) {
-                    endMins += 24 * 60; 
-                }
+<div id="viewport">
+    <div class="overlay-top">
+        <div class="toolbar">
+            <button class="tool-btn active" id="btnTrans" onclick="setMode('translate')" title="Move (W)">✢</button>
+            <button class="tool-btn" id="btnRot" onclick="setMode('rotate')" title="Rotate (E)">↻</button>
+            <button class="tool-btn" id="btnScale" onclick="setMode('scale')" title="Scale (R)">⤢</button>
+            <button class="tool-btn" onclick="setSpace()" title="Toggle Local/World (Q)">🌐</button>
+        </div>
+        <div id="toast">Ready</div>
+    </div>
+</div>
 
-                const totalMinutes = endMins - startMins;
-                const totalCups = Math.ceil((goal * 1000) / cup);
-                
-                // 3.1 Interval Logic
-                // Ensure at least 1 min interval
-                const interval = Math.max(60, Math.floor((totalMinutes / totalCups) * 60));
+<div id="timeline-panel">
+    <div class="timeline-controls">
+        <div class="btn-row" style="width: 240px; margin:0;">
+            <button class="btn btn-anim" id="recBtn" onclick="recordKey()">● Key (K)</button>
+            <button class="btn" id="playBtn" onclick="togglePlay()">▶ Play (Space)</button>
+            <select id="easeType" style="width: 80px; margin:0;" title="Interpolation">
+                <option value="linear">Linear</option>
+                <option value="smooth">Smooth</option>
+            </select>
+        </div>
+        <div class="time-readout" id="timeDisplay">0.00s</div>
+    </div>
+    <div class="track-wrapper" id="trackWrapper">
+        <input type="range" id="timeSlider" min="0" max="500" value="0" step="1">
+        <div class="playhead" id="playhead" style="left: 0%"></div>
+    </div>
+</div>
 
-                return { goal, cup, sVal, eVal, totalCups, interval };
-            }
+<script type="module">
+    import * as THREE from 'https://cdn.skypack.dev/three@0.136.0';
+    import { OrbitControls } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/OrbitControls.js';
+    import { TransformControls } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/TransformControls.js';
+    import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/loaders/GLTFLoader.js';
+    import { GLTFExporter } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/exporters/GLTFExporter.js';
+    import { RGBELoader } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/loaders/RGBELoader.js';
+    import { EffectComposer } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/postprocessing/RenderPass.js';
+    import { UnrealBloomPass } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/postprocessing/UnrealBloomPass.js';
 
-            startTracking() {
-                const plan = this.calculatePlan();
-                
-                this.state.goalL = plan.goal;
-                this.state.cupMl = plan.cup;
-                this.state.startStr = plan.sVal;
-                this.state.endStr = plan.eVal;
-                this.state.totalCups = plan.totalCups;
-                this.state.intervalSecs = plan.interval;
-                
-                // Set initial timer
-                this.state.secondsLeft = plan.interval;
-                this.state.currentCupsDrunk = 0;
-                this.state.activeMode = true;
-                this.state.running = true;
-                this.state.lastTick = Date.now();
+    // --- STATE ---
+    const state = {
+        selection: null,
+        isPlaying: false,
+        currentTime: 0,
+        maxTime: 5.0,
+        history: [], 
+        historyIndex: -1,
+        textureTarget: null,
+        hdriTexture: null,
+        pickingParent: false // Mode flag
+    };
 
-                this.switchScreen(true);
-                this.startTimerLoop();
-                this.saveState();
-            }
+    // --- SETUP ---
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, (window.innerWidth - 350) / (window.innerHeight - 120), 0.1, 1000);
+    camera.position.set(5, 4, 5);
 
-            startTimerLoop() {
-                if (this.timerId) clearInterval(this.timerId);
-                this.state.running = true;
-                this.state.lastTick = Date.now();
-                this.dom.btnPause.textContent = "Pause";
-                this.dom.statusLabel.textContent = "NEXT DRINK IN";
-                this.dom.statusLabel.classList.remove('blink');
-                
-                this.timerId = setInterval(() => this.tick(), 1000);
-            }
+    // Alpha true allows CSS background to show through if render background is null
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+    renderer.setSize(window.innerWidth - 350, window.innerHeight - 120);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    document.getElementById('viewport').appendChild(renderer.domElement);
 
-            pauseTimer() {
-                this.state.running = false;
-                clearInterval(this.timerId);
-                this.dom.btnPause.textContent = "Resume";
-                this.dom.statusLabel.textContent = "TIMER PAUSED";
-                this.saveState();
-            }
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
 
-            togglePause() {
-                // If waiting for drink (00:00), pause shouldn't do much or should just freeze state
-                if (this.state.secondsLeft <= 0) return; 
+    const gizmo = new TransformControls(camera, renderer.domElement);
+    gizmo.addEventListener('dragging-changed', (e) => {
+        controls.enabled = !e.value;
+        if (!e.value) pushHistory(); 
+    });
+    gizmo.addEventListener('change', () => { if(state.selection) refreshTransformUI(); });
+    scene.add(gizmo);
 
-                if (this.state.running) {
-                    this.pauseTimer();
-                } else {
-                    this.startTimerLoop();
-                }
-            }
+    // --- POST PROCESSING ---
+    const composer = new EffectComposer(renderer);
+    const renderPass = new RenderPass(scene, camera);
+    const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+    bloomPass.strength = 0.5;
+    bloomPass.radius = 0.4;
+    bloomPass.threshold = 0.85;
+    composer.addPass(renderPass);
+    composer.addPass(bloomPass);
 
-            tick() {
-                const now = Date.now();
-                const delta = Math.floor((now - this.state.lastTick) / 1000);
-                
-                if (delta >= 1) {
-                    // 3.4 Countdown Behavior: Never go below 0
-                    this.state.secondsLeft -= delta;
-                    this.state.lastTick = now;
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    pmremGenerator.compileEquirectangularShader();
 
-                    if (this.state.secondsLeft <= 0) {
-                        this.state.secondsLeft = 0;
-                        this.handleTimerComplete();
-                    }
+    // Default Lights & Env
+    const ambient = new THREE.AmbientLight(0xffffff, 0.2);
+    scene.add(ambient);
+    loadHDRI('venice_sunset_1k.hdr');
+    
+    // Background Color Init
+    const bgColorInput = document.getElementById('bgColor');
+    renderer.setClearColor(bgColorInput.value); 
 
-                    this.updateUI();
-                    
-                    // Auto-save occasionally
-                    if (this.state.secondsLeft % 30 === 0) this.saveState();
-                }
-            }
+    // --- CORE LOOP ---
+    function animate() {
+        requestAnimationFrame(animate);
 
-            handleTimerComplete() {
-                this.state.running = false;
-                clearInterval(this.timerId);
-                
-                // UI States for "Time to Drink"
-                this.dom.statusLabel.textContent = "TIME TO DRINK!";
-                this.dom.statusLabel.classList.add('blink');
-                this.dom.timer.textContent = "00:00";
-                
-                // Enable Drink Button, Disable Delay
-                this.dom.btnDrink.disabled = false;
-                this.dom.btnDelay.disabled = true;
-                this.dom.btnPause.textContent = "Resume"; // Visual reset
-                this.dom.btnPause.disabled = true;
-
-                // Play Sound
-                this.dom.audio.play().catch(e => console.log("Audio autoplay blocked"));
-                
-                this.saveState();
-            }
-
-            logDrink() {
-                this.state.currentCupsDrunk++;
-                
-                // Check if daily goal reached
-                if (this.state.currentCupsDrunk >= this.state.totalCups) {
-                    this.triggerWin();
-                } else {
-                    // Reset for next cup
-                    this.resetInterval();
-                }
-                
-                this.saveState();
-            }
-
-            resetInterval() {
-                this.state.secondsLeft = this.state.intervalSecs;
-                this.dom.btnDrink.disabled = true;
-                this.dom.btnDelay.disabled = false;
-                this.dom.btnPause.disabled = false;
-                this.dom.statusLabel.classList.remove('blink');
-                this.startTimerLoop();
-                this.updateUI();
-            }
-
-            triggerWin() {
-                // Confetti
-                confetti({
-                    particleCount: 150,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#06b6d4', '#0ea5e9', '#ffffff']
-                });
-
-                this.dom.statusLabel.textContent = "DAILY GOAL MET!";
-                this.dom.timer.textContent = "DONE";
-                this.dom.btnDrink.disabled = true;
-                this.dom.btnDelay.disabled = true;
-                this.dom.btnPause.disabled = true;
-                
-                // Increment streak
-                this.state.streak++;
-                this.updateStreakUI();
-            }
-
-            delay() {
-                // 3.5 Delay Logic
-                // Add 5 mins (300s), but max out at total interval
-                const addition = 300;
-                this.state.secondsLeft = Math.min(
-                    this.state.secondsLeft + addition, 
-                    this.state.intervalSecs
-                );
-                this.updateUI();
-                this.saveState();
-            }
-
-            resetSettings() {
-                if(confirm("Reset settings? This will clear today's progress but keep your streak.")) {
-                    clearInterval(this.timerId);
-                    this.state.activeMode = false;
-                    this.state.running = false;
-                    this.state.currentCupsDrunk = 0;
-                    this.switchScreen(false);
-                    this.saveState();
-                }
-            }
-
-            // --- UI Helpers ---
-
-            updateUI() {
-                // 1. Timer Text
-                const m = Math.floor(this.state.secondsLeft / 60).toString().padStart(2, '0');
-                const s = (this.state.secondsLeft % 60).toString().padStart(2, '0');
-                this.dom.timer.textContent = `${m}:${s}`;
-
-                // 2. Water Cylinder Animation
-                // Prompt: "fills according to remaining seconds". 
-                // As seconds go down (start -> 0), fill goes up (0% -> 100%)
-                const total = this.state.intervalSecs;
-                const elapsed = total - this.state.secondsLeft;
-                const fillPct = total > 0 ? (elapsed / total) * 100 : 100;
-                this.dom.waterFill.style.height = `${fillPct}%`;
-
-                // 3. Progress Bar
-                const dailyPct = (this.state.currentCupsDrunk / this.state.totalCups) * 100;
-                this.dom.progressBar.style.width = `${Math.min(dailyPct, 100)}%`;
-                this.dom.progressText.textContent = `${this.state.currentCupsDrunk} / ${this.state.totalCups} Cups`;
-
-                // 4. Drink Button State (Security)
-                // Only enable if timer is 0
-                if (this.state.secondsLeft > 0) {
-                    this.dom.btnDrink.disabled = true;
-                    this.dom.btnDelay.disabled = false;
-                    this.dom.btnPause.disabled = false;
-                }
-            }
-
-            switchScreen(toTracking) {
-                if (toTracking) {
-                    this.dom.setup.classList.add('hidden');
-                    this.dom.tracking.classList.remove('hidden');
-                } else {
-                    this.dom.setup.classList.remove('hidden');
-                    this.dom.tracking.classList.add('hidden');
-                }
-            }
-
-            toggleModal(show) {
-                if(show) this.dom.modal.classList.remove('hidden');
-                else this.dom.modal.classList.add('hidden');
-            }
-
-            updateStreakUI() {
-                this.dom.streaks.forEach(el => {
-                    el.textContent = `🔥 Streak: ${this.state.streak}`;
-                });
-            }
-
-            // --- Storage ---
-
-            saveState() {
-                localStorage.setItem('hp_state', JSON.stringify(this.state));
-            }
-
-            loadState() {
-                const raw = localStorage.getItem('hp_state');
-                if (raw) {
-                    const saved = JSON.parse(raw);
-                    // Merge saved state with defaults (handles new fields in future updates)
-                    this.state = { ...this.state, ...saved };
-                }
-            }
+        if (state.isPlaying) {
+            state.currentTime += 0.016; 
+            if (state.currentTime > state.maxTime) state.currentTime = 0;
+            updateTimelineUI();
+            applyAnimation(state.currentTime);
         }
 
-        // Initialize App
-        const app = new HydroProApp();
-    </script>
+        controls.update();
+        composer.render();
+    }
+    animate();
+
+    // --- ASSET MANAGEMENT ---
+    
+    function registerObject(obj, name, type) {
+        if (!obj.userData) obj.userData = {};
+        obj.userData.isStudioObj = true;
+        
+        let uniqueName = name;
+        let counter = 1;
+        while(scene.getObjectByName(uniqueName)) {
+            uniqueName = `${name}_${counter}`;
+            counter++;
+        }
+        obj.name = uniqueName;
+        obj.userData.type = type;
+        
+        if (!obj.userData.anim) obj.userData.anim = { pos: [], rot: [], scl: [] };
+
+        scene.add(obj);
+        updateSceneTree();
+        selectObject(obj);
+        pushHistory();
+    }
+
+    window.addLight = (type) => {
+        let light, helper;
+        if (type === 'point') {
+            light = new THREE.PointLight(0xffffff, 10, 100);
+            light.castShadow = true;
+            helper = new THREE.PointLightHelper(light, 0.5);
+        } else {
+            light = new THREE.DirectionalLight(0xffffff, 5);
+            light.position.set(5, 10, 5);
+            light.castShadow = true;
+            helper = new THREE.DirectionalLightHelper(light, 1);
+        }
+        light.userData.helper = helper; 
+        scene.add(helper);
+        registerObject(light, type === 'point' ? 'Point Light' : 'Sun Light', 'light');
+    };
+
+    // File Input Logic (Multiple Import Fix)
+    const fileInput = document.getElementById('fileInput');
+    fileInput.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const url = URL.createObjectURL(file);
+        const ext = file.name.split('.').pop().toLowerCase();
+
+        if (ext === 'glb' || ext === 'gltf') {
+            new GLTFLoader().load(url, (gltf) => {
+                const root = gltf.scene;
+                normalizeModel(root);
+                registerObject(root, file.name, 'mesh');
+            });
+        } else if (['jpg', 'png'].includes(ext)) {
+            new THREE.TextureLoader().load(url, (tex) => {
+                tex.encoding = THREE.sRGBEncoding;
+                const mat = new THREE.MeshStandardMaterial({ map: tex, side: THREE.DoubleSide, transparent: true });
+                const mesh = new THREE.Mesh(new THREE.PlaneGeometry(3, 3), mat);
+                mesh.castShadow = true;
+                mesh.receiveShadow = true;
+                registerObject(mesh, file.name, 'mesh');
+            });
+        }
+        fileInput.value = ''; // Reset to allow same file import
+    };
+
+    function normalizeModel(obj) {
+        obj.traverse(c => {
+            if (c.isMesh) {
+                c.castShadow = true;
+                c.receiveShadow = true;
+                if (c.material) {
+                    c.material.side = THREE.DoubleSide; 
+                    c.material.envMapIntensity = 1;
+                }
+            }
+        });
+    }
+
+    // --- SELECTION & HIERARCHY ---
+
+    window.selectObject = (obj) => {
+        if(state.pickingParent) {
+            confirmParenting(obj);
+            return;
+        }
+
+        state.selection = obj;
+        if (state.selection) {
+            gizmo.attach(state.selection);
+            document.getElementById('propertiesPanel').style.display = 'block';
+            
+            const isMesh = obj.userData.type === 'mesh' || obj.type === 'Mesh' || obj.type === 'Group';
+            const isLight = obj.userData.type === 'light';
+            
+            document.getElementById('matEditor').style.display = isMesh ? 'block' : 'none';
+            document.getElementById('lightEditor').style.display = isLight ? 'block' : 'none';
+
+            refreshProperties();
+            drawTimelineMarkers();
+        } else {
+            gizmo.detach();
+            document.getElementById('propertiesPanel').style.display = 'none';
+        }
+        updateSceneTree();
+    };
+
+    window.refreshTree = () => updateSceneTree();
+
+    function updateSceneTree() {
+        const container = document.getElementById('sceneTree');
+        container.innerHTML = '';
+        
+        function buildTree(obj, depth = 0) {
+            if (obj.userData && obj.userData.isStudioObj) {
+                const div = document.createElement('div');
+                div.className = `tree-item ${state.selection === obj ? 'active' : ''} ${state.pickingParent ? 'picking' : ''}`;
+                let indentHTML = '';
+                for(let i=0; i<depth; i++) indentHTML += '<span class="tree-indent"></span>';
+                div.innerHTML = `${indentHTML} <span class="icon">${obj.type === 'Group' ? '📁' : '📦'}</span> ${obj.name}`;
+                div.onclick = (e) => { e.stopPropagation(); selectObject(obj); };
+                container.appendChild(div);
+            }
+            if (obj.children) obj.children.forEach(child => buildTree(child, depth + 1));
+        }
+
+        scene.children.forEach(child => {
+            if (child !== gizmo && child !== ambient && !child.isLightHelper) buildTree(child);
+        });
+    }
+
+    // --- PARENTING SYSTEM (RESTORED) ---
+    window.startParentingMode = () => {
+        if(!state.selection) { showToast("Select a child object first"); return; }
+        state.pickingParent = true;
+        document.getElementById('btnParent').innerText = "Select Parent Now...";
+        document.getElementById('btnParent').classList.add('btn-anim');
+        updateSceneTree(); // Visual feedback
+    };
+
+    function confirmParenting(parent) {
+        if(parent === state.selection) { showToast("Cannot parent to self"); cancelParenting(); return; }
+        
+        parent.attach(state.selection); // THREE.js magic to keep transform relative
+        showToast(`Parented to ${parent.name}`);
+        cancelParenting();
+        pushHistory();
+    }
+
+    function cancelParenting() {
+        state.pickingParent = false;
+        document.getElementById('btnParent').innerText = "🔗 Pick Parent";
+        document.getElementById('btnParent').classList.remove('btn-anim');
+        updateSceneTree();
+    }
+
+    window.unparentSelection = () => {
+        if (!state.selection || !state.selection.parent) return;
+        scene.attach(state.selection);
+        pushHistory();
+        updateSceneTree();
+        showToast("Unparented");
+    };
+
+    // --- PROPERTIES & MATERIALS (RESTORED) ---
+    function refreshProperties() {
+        if (!state.selection) return;
+        refreshTransformUI();
+        
+        // Shadow Checkboxes
+        let targetMesh = null;
+        state.selection.traverse(c => { if (c.isMesh) targetMesh = c; });
+        if (targetMesh) {
+            document.getElementById('castShadow').checked = targetMesh.castShadow;
+            document.getElementById('receiveShadow').checked = targetMesh.receiveShadow;
+            
+            if (targetMesh.material) {
+                const m = targetMesh.material;
+                document.getElementById('matColor').value = '#' + (m.color ? m.color.getHexString() : 'ffffff');
+                if (m.emissive) document.getElementById('matEmissive').value = '#' + m.emissive.getHexString();
+                document.getElementById('matRough').value = m.roughness !== undefined ? m.roughness : 0.5;
+                document.getElementById('matMetal').value = m.metalness !== undefined ? m.metalness : 0;
+                document.getElementById('matOpacity').value = m.opacity;
+                document.getElementById('matTransparent').checked = m.transparent;
+            }
+        }
+    }
+
+    function refreshTransformUI() {
+        if (!state.selection) return;
+        const o = state.selection;
+        document.getElementById('posX').value = o.position.x.toFixed(2);
+        document.getElementById('posY').value = o.position.y.toFixed(2);
+        document.getElementById('posZ').value = o.position.z.toFixed(2);
+        document.getElementById('rotX').value = (o.rotation.x * 180 / Math.PI).toFixed(1);
+        document.getElementById('rotY').value = (o.rotation.y * 180 / Math.PI).toFixed(1);
+        document.getElementById('rotZ').value = (o.rotation.z * 180 / Math.PI).toFixed(1);
+        document.getElementById('sclX').value = o.scale.x.toFixed(2);
+        document.getElementById('sclY').value = o.scale.y.toFixed(2);
+        document.getElementById('sclZ').value = o.scale.z.toFixed(2);
+    }
+
+    window.updateTransform = (type, axis, val) => {
+        if (!state.selection) return;
+        const num = parseFloat(val);
+        if (type === 'pos') state.selection.position[axis] = num;
+        if (type === 'rot') state.selection.rotation[axis] = num * (Math.PI / 180);
+        if (type === 'scl') state.selection.scale[axis] = num;
+        pushHistory();
+    };
+
+    window.updateShadows = () => {
+         if(!state.selection) return;
+         const cast = document.getElementById('castShadow').checked;
+         const rec = document.getElementById('receiveShadow').checked;
+         state.selection.traverse(c => {
+             if(c.isMesh) { c.castShadow = cast; c.receiveShadow = rec; }
+         });
+    };
+
+    // --- MATERIAL TEXTURES ---
+    window.triggerTex = (mapType) => {
+        state.textureTarget = mapType;
+        document.getElementById('texInput').click();
+    };
+    document.getElementById('texInput').onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file || !state.selection) return;
+        const url = URL.createObjectURL(file);
+        new THREE.TextureLoader().load(url, (tex) => {
+            tex.encoding = THREE.sRGBEncoding;
+            tex.flipY = false; 
+            state.selection.traverse(c => {
+                if (c.isMesh && c.material) {
+                    c.material[state.textureTarget] = tex;
+                    c.material.needsUpdate = true;
+                }
+            });
+            showToast(`${state.textureTarget} Loaded`);
+        });
+        document.getElementById('texInput').value = '';
+    };
+
+    // Material Inputs
+    document.getElementById('matColor').oninput = (e) => {
+        state.selection?.traverse(c => { if(c.isMesh) c.material.color.set(e.target.value); });
+    };
+    document.getElementById('matEmissive').oninput = (e) => {
+        state.selection?.traverse(c => { if(c.isMesh) c.material.emissive.set(e.target.value); });
+    };
+    document.getElementById('matRough').oninput = (e) => {
+        state.selection?.traverse(c => { if(c.isMesh) c.material.roughness = parseFloat(e.target.value); });
+    };
+    document.getElementById('matMetal').oninput = (e) => {
+        state.selection?.traverse(c => { if(c.isMesh) c.material.metalness = parseFloat(e.target.value); });
+    };
+    document.getElementById('matOpacity').oninput = (e) => {
+        state.selection?.traverse(c => { if(c.isMesh) { c.material.opacity = parseFloat(e.target.value); }});
+    };
+    document.getElementById('matTransparent').onchange = (e) => {
+         state.selection?.traverse(c => { if(c.isMesh) { c.material.transparent = e.target.checked; c.material.needsUpdate = true; }});
+    };
+
+    // --- MODULAR BACKGROUND & ENVIRONMENT LOGIC ---
+    
+    function updateEnvironmentState() {
+        const lightingOn = document.getElementById('envLighting').checked;
+        const visibleOn = document.getElementById('envVisible').checked;
+        const hdri = state.hdriTexture;
+
+        // Lighting Logic
+        scene.environment = lightingOn ? hdri : null;
+
+        // Background Logic
+        // If visible is ON and we have HDRI, show HDRI.
+        // If visible is OFF, set background to null (so renderer.clearColor shows through)
+        scene.background = (visibleOn && hdri) ? hdri : null;
+    }
+
+    // 1. Solid Color Change
+    document.getElementById('bgColor').addEventListener('input', (e) => {
+        renderer.setClearColor(e.target.value);
+    });
+
+    // 2. Toggles
+    document.getElementById('envLighting').addEventListener('change', updateEnvironmentState);
+    document.getElementById('envVisible').addEventListener('change', updateEnvironmentState);
+
+    // 3. HDRI Loader (Presets)
+    function loadHDRI(url) {
+        // If url is blob (custom), don't prepend prefix
+        const fullUrl = url.startsWith('blob:') ? url : `https://threejs.org/examples/textures/equirectangular/${url}`;
+        
+        new RGBELoader().load(fullUrl, (texture) => {
+            const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+            state.hdriTexture = envMap; 
+            updateEnvironmentState();
+            texture.dispose();
+            showToast("Environment Loaded");
+        });
+    }
+    document.getElementById('envMapSelect').onchange = (e) => loadHDRI(e.target.value);
+
+    // 4. Custom HDRI Upload
+    document.getElementById('hdrInput').onchange = (e) => {
+        const file = e.target.files[0];
+        if(!file) return;
+        const url = URL.createObjectURL(file);
+        loadHDRI(url);
+    };
+
+    // --- ANIMATION SYSTEM ---
+    window.recordKey = () => {
+        if (!state.selection) return;
+        const obj = state.selection;
+        const t = state.currentTime;
+        const ease = document.getElementById('easeType').value;
+        const pushKey = (arr, val) => {
+            const idx = arr.findIndex(k => Math.abs(k.t - t) < 0.05);
+            if(idx > -1) arr.splice(idx, 1);
+            arr.push({ t: t, v: val.clone(), ease: ease });
+            arr.sort((a,b) => a.t - b.t);
+        };
+        pushKey(obj.userData.anim.pos, obj.position);
+        pushKey(obj.userData.anim.rot, obj.quaternion);
+        pushKey(obj.userData.anim.scl, obj.scale);
+        drawTimelineMarkers();
+        showToast("Keyframe Added");
+    };
+
+    window.togglePlay = () => {
+        state.isPlaying = !state.isPlaying;
+        document.getElementById('playBtn').innerText = state.isPlaying ? "⏸ Stop" : "▶ Play (Space)";
+    };
+
+    const timeSlider = document.getElementById('timeSlider');
+    timeSlider.addEventListener('input', (e) => {
+        state.currentTime = parseFloat(e.target.value) / 100;
+        state.isPlaying = false;
+        updateTimelineUI();
+        applyAnimation(state.currentTime);
+    });
+
+    function updateTimelineUI() {
+        document.getElementById('timeDisplay').innerText = state.currentTime.toFixed(2) + "s";
+        document.getElementById('playhead').style.left = (state.currentTime / state.maxTime * 100) + '%';
+        timeSlider.value = state.currentTime * 100;
+    }
+
+    function drawTimelineMarkers() {
+        const wrapper = document.getElementById('trackWrapper');
+        wrapper.querySelectorAll('.key-marker').forEach(e => e.remove());
+        if (!state.selection || !state.selection.userData.anim) return;
+        state.selection.userData.anim.pos.forEach(k => {
+            const div = document.createElement('div');
+            div.className = 'key-marker';
+            div.style.left = (k.t / state.maxTime * 100) + '%';
+            wrapper.appendChild(div);
+        });
+    }
+
+    function applyAnimation(time) {
+        scene.traverse(obj => {
+            if (obj.userData && obj.userData.anim && obj.userData.anim.pos.length > 1) {
+                const anim = obj.userData.anim;
+                const p = interpolate(time, anim.pos, 'lerp');
+                if(p) obj.position.copy(p);
+                const s = interpolate(time, anim.scl, 'lerp');
+                if(s) obj.scale.copy(s);
+                const r = interpolate(time, anim.rot, 'slerp');
+                if(r) obj.quaternion.copy(r);
+            }
+        });
+        if(state.selection) refreshTransformUI();
+    }
+
+    function interpolate(time, keys, method) {
+        if (time <= keys[0].t) return keys[0].v;
+        if (time >= keys[keys.length-1].t) return keys[keys.length-1].v;
+        let prev = keys[0], next = keys[0];
+        for (let i = 0; i < keys.length - 1; i++) {
+            if (time >= keys[i].t && time < keys[i+1].t) {
+                prev = keys[i];
+                next = keys[i+1];
+                break;
+            }
+        }
+        let alpha = (time - prev.t) / (next.t - prev.t);
+        if (prev.ease === 'smooth') alpha = alpha < 0.5 ? 2 * alpha * alpha : -1 + (4 - 2 * alpha) * alpha;
+        const result = prev.v.clone();
+        if (method === 'slerp') return result.slerp(next.v, alpha);
+        return result.lerp(next.v, alpha);
+    }
+
+    // --- UTILS & HISTORY ---
+    function pushHistory() {
+        if (state.history.length > 20) state.history.shift();
+        const snapshot = [];
+        scene.traverse(o => {
+            if(o.userData.isStudioObj) {
+                snapshot.push({ 
+                    uuid: o.uuid, 
+                    pos: o.position.clone(), 
+                    rot: o.rotation.clone(), 
+                    scl: o.scale.clone(),
+                    parent: o.parent ? o.parent.uuid : null // Track parent for undo (basic)
+                });
+            }
+        });
+        state.history = state.history.slice(0, state.historyIndex + 1);
+        state.history.push(snapshot);
+        state.historyIndex++;
+    }
+
+    window.undo = () => {
+        if (state.historyIndex <= 0) return;
+        state.historyIndex--;
+        const snapshot = state.history[state.historyIndex];
+        snapshot.forEach(record => {
+            const obj = scene.getObjectByProperty('uuid', record.uuid);
+            if (obj) {
+                obj.position.copy(record.pos);
+                obj.rotation.copy(record.rot);
+                obj.scale.copy(record.scl);
+                // Parent restoration is complex without full graph re-build, omitting for safety in v1
+            }
+        });
+        refreshProperties();
+        showToast("Undo");
+    };
+
+    window.duplicateObject = () => {
+        if (!state.selection) return;
+        const clone = state.selection.clone();
+        clone.position.x += 1;
+        registerObject(clone, state.selection.name + "_copy", state.selection.userData.type);
+    };
+
+    window.deleteSelected = () => {
+        if(!state.selection) return;
+        const o = state.selection;
+        gizmo.detach();
+        o.parent.remove(o);
+        if(o.userData.helper) scene.remove(o.userData.helper);
+        state.selection = null;
+        updateSceneTree();
+        document.getElementById('propertiesPanel').style.display = 'none';
+    };
+
+    // --- EXPORT FUNCTIONS ---
+
+    window.exportGLB = () => {
+        const exporter = new GLTFExporter();
+        exporter.parse(scene, (result) => {
+            const output = JSON.stringify(result, null, 2);
+            const blob = new Blob([output], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'scene.gltf';
+            link.click();
+        }, { binary: false });
+    };
+
+    // HQ POV IMAGE (Supersampling)
+    window.exportRenderHighRes = () => {
+        gizmo.detach();
+        const w = window.innerWidth - 350;
+        const h = window.innerHeight - 120;
+        
+        renderer.setSize(w * 2, h * 2);
+        composer.setSize(w * 2, h * 2);
+        composer.render();
+        
+        const link = document.createElement('a');
+        link.download = `Studio_Render_${Date.now()}.png`;
+        link.href = renderer.domElement.toDataURL('image/png');
+        link.click();
+        
+        renderer.setSize(w, h);
+        composer.setSize(w, h);
+        if(state.selection) gizmo.attach(state.selection);
+    };
+
+    // VIDEO EXPORT (WebM VP9)
+    window.exportVideo = () => {
+        if(state.isPlaying) togglePlay();
+        gizmo.detach();
+        
+        const overlay = document.getElementById('recOverlay');
+        overlay.style.display = 'flex';
+
+        // 60FPS Stream
+        const stream = renderer.domElement.captureStream(60); 
+        const mime = 'video/webm;codecs=vp9'; // High quality default
+        const recorder = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 10000000 }); // 10 Mbps
+        
+        const chunks = [];
+        recorder.ondataavailable = (e) => { if(e.data.size > 0) chunks.push(e.data); };
+        
+        recorder.onstop = () => {
+            const blob = new Blob(chunks, { type: mime });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Animation_${Date.now()}.webm`;
+            a.click();
+            
+            overlay.style.display = 'none';
+            if(state.selection) gizmo.attach(state.selection);
+        };
+
+        state.currentTime = 0;
+        recorder.start();
+        
+        function recLoop() {
+            if(state.currentTime >= state.maxTime) {
+                recorder.stop();
+                return;
+            }
+            state.currentTime += 0.016;
+            applyAnimation(state.currentTime);
+            updateTimelineUI();
+            composer.render();
+            requestAnimationFrame(recLoop);
+        }
+        recLoop();
+    };
+
+    // --- HOTKEYS ---
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.innerText = msg;
+        t.style.opacity = 1;
+        setTimeout(() => t.style.opacity = 0, 2000);
+    }
+
+    window.addEventListener('keydown', (e) => {
+        if(e.target.tagName === 'INPUT') return; 
+        switch(e.key.toLowerCase()) {
+            case 'w': setMode('translate'); break;
+            case 'e': setMode('rotate'); break;
+            case 'r': setMode('scale'); break;
+            case 'q': setSpace(); break;
+            case 'f': focusObject(); break;
+            case ' ': e.preventDefault(); togglePlay(); break;
+            case 'k': recordKey(); break;
+            case 'delete': deleteSelected(); break;
+            case 'z': if(e.ctrlKey) undo(); break;
+            case 'd': if(e.ctrlKey) { e.preventDefault(); duplicateObject(); } break;
+        }
+    });
+
+    window.setMode = (m) => {
+        gizmo.setMode(m);
+        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+        if(m==='translate') document.getElementById('btnTrans').classList.add('active');
+        if(m==='rotate') document.getElementById('btnRot').classList.add('active');
+        if(m==='scale') document.getElementById('btnScale').classList.add('active');
+    };
+    
+    window.setSpace = () => {
+        gizmo.setSpace(gizmo.space === 'local' ? 'world' : 'local');
+        showToast(`Space: ${gizmo.space.toUpperCase()}`);
+    };
+
+    window.focusObject = () => {
+        if(!state.selection) return;
+        const box = new THREE.Box3().setFromObject(state.selection);
+        const center = box.getCenter(new THREE.Vector3());
+        controls.target.copy(center);
+        controls.update();
+    };
+
+    window.resetScene = () => { if(confirm("Clear scene?")) location.reload(); };
+    window.onresize = () => {
+        camera.aspect = (window.innerWidth - 350) / (window.innerHeight - 120);
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth - 350, window.innerHeight - 120);
+        composer.setSize(window.innerWidth - 350, window.innerHeight - 120);
+    };
+
+</script>
 </body>
 </html>
